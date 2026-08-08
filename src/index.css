@@ -1,0 +1,273 @@
+/* ============================================
+   BATMAN / GOTHAM DARK KNIGHT DESIGN SYSTEM
+   ============================================ */
+
+:root {
+  /* --- Batman Palette --- */
+  --bm-dark: #08090e;
+  --bm-dark-surface: #10131d;
+  --bm-dark-card: #161a27;
+  --bm-yellow: #ffcc00;
+  --bm-yellow-glow: #ffd700;
+  --bm-gold: #e6b800;
+  --bm-cyan: #00e5ff;
+  --bm-cyan-glow: #33ecff;
+  --bm-crimson: #e63946;
+  --bm-blue: #1d3557;
+  --bm-steel: #8e9aaf;
+  --bm-silver: #d1d5db;
+  --bm-white: #f8fafc;
+  --bm-border: #232838;
+
+  /* --- Typography --- */
+  --font-comic: 'Bebas Neue', sans-serif;
+  --font-heading: 'Rajdhani', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+  --font-mono: 'Kode Mono', monospace;
+
+  /* --- Spacing --- */
+  --section-padding: 6rem 2rem;
+  --container-max: 1200px;
+
+  /* --- Transitions --- */
+  --transition-fast: 0.15s ease;
+  --transition-mid: 0.3s ease;
+  --transition-slow: 0.6s ease;
+
+  /* --- Borders & Shadows --- */
+  --comic-border: 3px solid #000;
+  --comic-shadow: -5px 5px 0 #000;
+  --bat-glow: 0 0 20px rgba(255, 204, 0, 0.35);
+  --cyan-glow: 0 0 20px rgba(0, 229, 255, 0.35);
+}
+
+/* --- Global Reset --- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bm-dark);
+  color: var(--bm-white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  background-color: var(--bm-dark);
+}
+
+/* --- Custom Scrollbar --- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bm-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bm-yellow);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bm-yellow-glow);
+  box-shadow: 0 0 10px var(--bm-yellow);
+}
+
+/* --- Utility Classes --- */
+.section-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--section-padding);
+}
+
+/* Batman Comic heading */
+.comic-heading {
+  font-family: var(--font-comic);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.6);
+  paint-order: stroke fill;
+}
+
+/* Halftone dot overlay — Gotham dark pattern */
+.halftone-bg {
+  position: relative;
+}
+
+.halftone-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255, 204, 0, 0.05) 1.2px, transparent 1.2px);
+  background-size: 8px 8px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ben-Day dots for section accents */
+.benday-bg {
+  position: relative;
+}
+
+.benday-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--bm-yellow) 0.8px, transparent 0.8px);
+  background-size: 14px 14px;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Gold / Cyan Glitch Effect */
+.chromatic {
+  position: relative;
+}
+
+.chromatic::before,
+.chromatic::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.chromatic::before {
+  color: var(--bm-cyan);
+  z-index: -1;
+  animation: chromatic-shift-r 3s ease-in-out infinite alternate;
+}
+
+.chromatic::after {
+  color: var(--bm-yellow);
+  z-index: -1;
+  animation: chromatic-shift-l 3s ease-in-out infinite alternate;
+}
+
+@keyframes chromatic-shift-r {
+  0% { transform: translate(2px, -1px); }
+  100% { transform: translate(-2px, 1px); }
+}
+
+@keyframes chromatic-shift-l {
+  0% { transform: translate(-2px, 1px); }
+  100% { transform: translate(2px, -1px); }
+}
+
+/* Scroll-triggered reveal animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger children */
+.stagger-children > *:nth-child(1) { transition-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { transition-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { transition-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { transition-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { transition-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { transition-delay: 0.3s; }
+.stagger-children > *:nth-child(7) { transition-delay: 0.35s; }
+.stagger-children > *:nth-child(8) { transition-delay: 0.4s; }
+
+/* Links */
+a {
+  color: var(--bm-yellow);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--bm-cyan);
+}
+
+/* Diagonal section divider — Batwing cut */
+.section-divider {
+  width: 100%;
+  height: 60px;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  margin: 0;
+}
+
+.section-divider::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    var(--bm-yellow) 0%, var(--bm-yellow) 25%,
+    #111 25%, #111 50%,
+    var(--bm-cyan) 50%, var(--bm-cyan) 75%,
+    var(--bm-dark-surface) 75%, var(--bm-dark-surface) 100%
+  );
+  clip-path: polygon(0 40%, 50% 10%, 100% 40%, 100% 60%, 50% 90%, 0 60%);
+  opacity: 0.6;
+}
+
+.section-divider::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bm-dark);
+  clip-path: polygon(0 45%, 50% 15%, 100% 45%, 100% 55%, 50% 85%, 0 55%);
+}
+
+/* Selection color */
+::selection {
+  background: var(--bm-yellow);
+  color: #000;
+}
+
+/* Comic action SFX pill */
+.comic-sfx {
+  font-family: var(--font-comic);
+  font-size: 1.4rem;
+  letter-spacing: 4px;
+  color: var(--bm-yellow);
+  text-shadow:
+    2px 2px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  -webkit-text-stroke: 1px #000;
+  transform: rotate(-6deg);
+  display: inline-block;
+  animation: sfx-bounce 2.5s ease-in-out infinite;
+}
+
+@keyframes sfx-bounce {
+  0%, 100% { transform: rotate(-6deg) scale(1); }
+  50% { transform: rotate(-3deg) scale(1.06); }
+}
+
+/* Comic panel border style */
+.comic-panel {
+  border: 3px solid #000;
+  box-shadow: -5px 5px 0 #000;
+  position: relative;
+}

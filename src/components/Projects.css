@@ -1,0 +1,290 @@
+/* ============================================
+   WAYNE LABS PROJECTS SECTION — 3D FLIP CARDS
+   ============================================ */
+
+.projects {
+  position: relative;
+  background: var(--bm-dark-surface);
+}
+
+.projects__container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.projects__header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.projects__title {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  color: var(--bm-white);
+}
+
+.projects__title-accent {
+  color: var(--bm-yellow);
+  position: relative;
+}
+
+.projects__title-accent::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--bm-yellow);
+  border-radius: 2px;
+  box-shadow: 0 0 10px var(--bm-yellow);
+}
+
+.projects__title-line {
+  width: 80px;
+  height: 4px;
+  background: var(--bm-yellow);
+  margin: 1rem auto 0;
+  box-shadow: 0 0 10px var(--bm-yellow);
+}
+
+/* Grid — 2 columns per line */
+.projects__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .projects__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 3D Perspective Container */
+.projects__card-wrapper {
+  perspective: 1200px;
+  -webkit-perspective: 1200px;
+  height: 440px;
+}
+
+/* Outer Card Container */
+.projects__card {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Inner 3D Rotating Box */
+.projects__card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Horizontal 3D Flip on Click (rotateY) */
+.projects__card--flipped .projects__card-inner {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+
+/* Front & Back Card Faces */
+.projects__card-front,
+.projects__card-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 3px solid #000;
+  box-shadow: -6px 6px 0 #000;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Front Face */
+.projects__card-front {
+  transform: rotateY(0deg);
+  -webkit-transform: rotateY(0deg);
+  z-index: 2;
+  overflow: hidden;
+}
+
+/* Back Face */
+.projects__card-back {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  z-index: 1;
+  background: var(--bm-dark-card);
+  overflow-y: auto;
+}
+
+/* Background Gradients */
+.projects__card--yellow .projects__card-front,
+.projects__card--yellow .projects__card-back {
+  background:
+    radial-gradient(ellipse at 30% 70%, rgba(255, 204, 0, 0.2) 0%, transparent 60%),
+    var(--bm-dark-card);
+  border-top: 5px solid var(--bm-yellow);
+}
+
+.projects__card--cyan .projects__card-front,
+.projects__card--cyan .projects__card-back {
+  background:
+    radial-gradient(ellipse at 70% 30%, rgba(0, 229, 255, 0.2) 0%, transparent 60%),
+    var(--bm-dark-card);
+  border-top: 5px solid var(--bm-cyan);
+}
+
+.projects__card--gold .projects__card-front,
+.projects__card--gold .projects__card-back {
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(230, 184, 0, 0.2) 0%, transparent 60%),
+    var(--bm-dark-card);
+  border-top: 5px solid var(--bm-gold);
+}
+
+.projects__card-front::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 10px 10px;
+  pointer-events: none;
+}
+
+/* Issue number */
+.projects__card-issue {
+  font-size: 3.5rem;
+  opacity: 0.12;
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  z-index: 0;
+  letter-spacing: 3px;
+  color: var(--bm-yellow);
+}
+
+.projects__card--cyan .projects__card-issue {
+  color: var(--bm-cyan);
+}
+
+/* Cover content */
+.projects__card-cover {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 1;
+}
+
+.projects__card-title {
+  font-size: 2.2rem;
+  color: var(--bm-white);
+  line-height: 1.15;
+  margin-bottom: 0.6rem;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.projects__card-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--bm-steel);
+}
+
+.projects__card-bottom {
+  border-top: 1px solid var(--bm-border);
+  padding-top: 0.8rem;
+  z-index: 1;
+}
+
+.projects__card-flip-hint {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--bm-yellow);
+  font-weight: 700;
+}
+
+.projects__card--cyan .projects__card-flip-hint {
+  color: var(--bm-cyan);
+}
+
+/* Back face styling */
+.projects__card-back-title {
+  font-size: 1.6rem;
+  color: var(--bm-yellow);
+  margin-bottom: 0.8rem;
+  border-bottom: 1px solid var(--bm-border);
+  padding-bottom: 0.4rem;
+}
+
+.projects__card--cyan .projects__card-back-title {
+  color: var(--bm-cyan);
+}
+
+.projects__card-desc {
+  font-size: 0.95rem;
+  color: var(--bm-silver);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.projects__card-highlights {
+  margin-bottom: 1rem;
+}
+
+.projects__card-highlight {
+  font-size: 0.9rem;
+  color: var(--bm-white);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.projects__card-highlight-dot {
+  color: var(--bm-yellow);
+  font-size: 0.8rem;
+}
+
+.projects__card--cyan .projects__card-highlight-dot {
+  color: var(--bm-cyan);
+}
+
+.projects__card-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.projects__tech-tag {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 0.3rem 0.7rem;
+  background: rgba(255, 204, 0, 0.12);
+  color: var(--bm-yellow);
+  border: 1px solid var(--bm-yellow);
+  border-radius: 4px;
+}
+
+.projects__tech-tag--cyan {
+  background: rgba(0, 229, 255, 0.12);
+  color: var(--bm-cyan);
+  border-color: var(--bm-cyan);
+}
+
+.projects__tech-tag--gold {
+  background: rgba(230, 184, 0, 0.12);
+  color: var(--bm-gold);
+  border-color: var(--bm-gold);
+}

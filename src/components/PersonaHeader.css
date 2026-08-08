@@ -1,0 +1,75 @@
+.persona-header {
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--bm-dark-surface);
+  border-top: 3px solid #000;
+  border-bottom: 3px solid #000;
+}
+
+.persona-header--yellow {
+  border-left: 8px solid var(--bm-yellow);
+  background: linear-gradient(135deg, rgba(255, 204, 0, 0.08) 0%, rgba(16, 19, 29, 0.95) 100%);
+}
+
+.persona-header--cyan {
+  border-left: 8px solid var(--bm-cyan);
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.08) 0%, rgba(16, 19, 29, 0.95) 100%);
+}
+
+.persona-header__inner {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.persona-header__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.8rem;
+  vertical-align: middle;
+  filter: drop-shadow(0 0 8px var(--bm-yellow));
+}
+
+.persona-header__title {
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.persona-header--yellow .persona-header__title {
+  color: var(--bm-yellow);
+  text-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
+}
+
+.persona-header--cyan .persona-header__title {
+  color: var(--bm-cyan);
+  text-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+}
+
+.persona-header__subtitle {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--bm-steel);
+}
+
+.persona-header__lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 255, 255, 0.02) 10px,
+    rgba(255, 255, 255, 0.02) 20px
+  );
+  pointer-events: none;
+}
