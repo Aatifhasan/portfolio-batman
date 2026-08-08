@@ -7,6 +7,8 @@ function Contact() {
   const [email, setEmail] = useState('');
   const [msg, setMsg] = useState('');
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [result, setResult] = useState('');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -26,19 +28,52 @@ function Contact() {
     return () => observer.disconnect();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name || !email || !msg) return;
 
-    const subject = encodeURIComponent(`Bat-Signal Message from ${name}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${msg}`);
-    window.open(`mailto:aatifhasan00@gmail.com?subject=${subject}&body=${body}`, '_self');
+    setSubmitting(true);
+    setResult('TRANSMITTING SIGNAL...');
 
-    setSent(true);
-    setName('');
-    setEmail('');
-    setMsg('');
-    setTimeout(() => setSent(false), 4000);
+    const accessKey = process.env.REACT_APP_WEB3FORMS_ACCESS_KEY || '7b0eb0c8-4bef-4fcf-ab2d-90c411840765';
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: name,
+          email: email,
+          message: msg,
+          subject: `Bat-Signal Transmission from ${name}`,
+        }),
+      });
+
+      const data = await response.json();
+      console.log('Web3Forms response:', data);
+
+      if (data.success) {
+        setSent(true);
+        setResult('SIGNAL TRANSMITTED SUCCESSFULLY!');
+        setName('');
+        setEmail('');
+        setMsg('');
+      } else {
+        setResult(data.message || 'TRANSMISSION FAILED. CHECK ACCESS KEY.');
+      }
+    } catch (err) {
+      setResult('TRANSMISSION ERROR. PLEASE TRY AGAIN.');
+    } finally {
+      setSubmitting(false);
+      setTimeout(() => {
+        setSent(false);
+        setResult('');
+      }, 5000);
+    }
   };
 
   return (
@@ -98,11 +133,17 @@ function Contact() {
 
             <button
               type="submit"
+              disabled={submitting}
               className="hero__btn hero__btn--primary"
-              style={{ width: '100%', marginTop: '1rem', border: '3px solid #000' }}
+              style={{ width: '100%', marginTop: '1rem', border: '3px solid #000', opacity: submitting ? 0.7 : 1 }}
             >
-              {sent ? 'SIGNAL TRANSMITTED!' : 'TRANSMIT BAT-SIGNAL'}
+              {submitting ? 'TRANSMITTING...' : sent ? 'SIGNAL TRANSMITTED!' : 'TRANSMIT BAT-SIGNAL'}
             </button>
+            {result && (
+              <p style={{ marginTop: '0.75rem', fontWeight: 'bold', color: sent ? '#00ff88' : '#ff0055', textAlign: 'center' }}>
+                {result}
+              </p>
+            )}
           </form>
 
           {/* Socials */}
